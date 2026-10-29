@@ -1,40 +1,21 @@
 @extends('layouts.app')
 
+@section('title', 'Supplier List')
+
 @section('content')
+    <h2>Supplier List</h2>
 
-<div class="container">
+    @foreach ($suppliers as $supplier)
+        <div>
+            <h3>{{ $supplier['name'] }}</h3>
 
-    <h1>Suppliers List</h1>
+            <p>Email: {{ $supplier['email'] ?? 'Not available' }}</p>
+            <p>Phone: {{ $supplier['phone'] ?? 'Not available' }}</p>
 
-    <table border="1" cellpadding="10">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-
-        <tbody>
-            @foreach ($suppliers as $supplier)
-                <tr>
-                    <td>{{ $supplier['id'] }}</td>
-                    <td>{{ $supplier['name'] }}</td>
-                    <td>{{ $supplier['email'] }}</td>
-                    <td>{{ $supplier['phone'] }}</td>
-
-                    <td>
-                        <a href="{{ route('suppliers.show', $supplier['id']) }}">
-                            View Details
-                        </a>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-
-</div>
-
+            <a href="{{ route('suppliers.show', $supplier['id']) }}">
+                View Details
+            </a>
+        </div>
+        <hr>
+    @endforeach
 @endsection
