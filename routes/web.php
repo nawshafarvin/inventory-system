@@ -22,5 +22,7 @@ Route::get('/suppliers/{id}', [SuppliersController::class, 'show'])
 
 Route::get('/products/{id}', [ProductController::class, 'show'])
     ->name('products.show');
+    Route::get('/categories', [CategoryController::class, 'index'])
+    ->name('categories.index');
     Route::get('/low-stock', [LowStockController::class, 'index'])
-    ->name('low-stock.index');
+    ->name('low-stock.index'); 
