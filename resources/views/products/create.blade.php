@@ -4,12 +4,34 @@
 
 <label>Product Name</label>
 <input type="text" name="name">
+
+@error('name')
+    <p style="color: red;">{{ $message }}</p>
+@enderror
+
 <label>Description</label>
 <textarea name="description"></textarea>
+
+@error('description')
+    <p style="color: red;">{{ $message }}</p>
+@enderror
+
+
+
 <label>Price</label>
 <input type="number" name="price" step="0.01">
+
+@error('price')
+    <p style="color: red;">{{ $message }}</p>
+@enderror
+
+
 <label>Quantity</label>
 <input type="number" name="quantity">
+
+@error('quantity')
+    <p style="color: red;">{{ $message }}</p>
+@enderror
 <label>Category</label>
 <select name="category_id">
     <option value="">Select Category</option>
@@ -18,7 +40,12 @@
         {{ $category->name }}
     </option>
 @endforeach
-</select>
+</select>  
+
+@error('category_id')
+    <p style="color: red;">{{ $message }}</p>
+@enderror
+
 <label>Supplier</label>
 <select name="supplier_id">
     <option value="">Select Supplier</option>
@@ -28,5 +55,9 @@
     </option>
 @endforeach
 </select>
+
+@error('supplier_id')
+    <p style="color: red;">{{ $message }}</p>
+@enderror
 
 <button type="submit">Save Product</button>

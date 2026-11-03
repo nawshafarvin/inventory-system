@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreProductRequest;
 
 class ProductController extends Controller
 {
@@ -27,16 +28,9 @@ class ProductController extends Controller
 $suppliers = Supplier::all();
     return view('products.create', compact('categories', 'suppliers'));
 }
-public function store(Request $request)
+public function store(StoreProductRequest $request)
 {
-$validated = $request->validate([
-    'name' => 'required|string|max:255',
-    'description' => 'nullable|string',
-    'price' => 'required|numeric|min:0',
-    'quantity' => 'required|integer|min:0',
-    'category_id' => 'required|exists:categories,id',
-    'supplier_id' => 'required|exists:suppliers,id',
-]);
+$validated = $request->validated();
 Product::create($validated);
 
 return redirect()->route('products.index')
