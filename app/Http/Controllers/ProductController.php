@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Category;
+use App\Models\Supplier;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -19,4 +22,24 @@ class ProductController extends Controller
 
         return view('products.show', ['product' => $product]);
     }
+    public function create()
+{$categories = Category::all();
+$suppliers = Supplier::all();
+    return view('products.create', compact('categories', 'suppliers'));
+}
+public function store(Request $request)
+{
+$validated = $request->validate([
+    'name' => 'required|string|max:255',
+    'description' => 'nullable|string',
+    'price' => 'required|numeric|min:0',
+    'quantity' => 'required|integer|min:0',
+    'category_id' => 'required|exists:categories,id',
+    'supplier_id' => 'required|exists:suppliers,id',
+]);
+Product::create($validated);
+
+return redirect()->route('products.index')
+    ->with('success', 'Product created successfully!');
+}
 }
