@@ -1,4 +1,4 @@
-<form action="{{ route('products.store') }}" method="POST">
+<form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
     @csrf 
 <h1>Add New Product</h1>
 
@@ -28,6 +28,8 @@
 
 <label>Quantity</label>
 <input type="number" name="quantity">
+<label>Product Image</label>
+<input type="file" name="image">
 
 @error('quantity')
     <p style="color: red;">{{ $message }}</p>

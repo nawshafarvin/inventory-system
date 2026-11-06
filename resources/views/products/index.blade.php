@@ -15,6 +15,9 @@
 
     @foreach ($products as $product)
         <div>
+            @if ($product->image)
+    <img src="{{ asset('storage/' . $product->image) }}" width="150">
+@endif
             <h3>{{ $product->name }}</h3>
 
             <p>Stock: {{ $product->quantity }}</p>

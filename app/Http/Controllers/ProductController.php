@@ -31,6 +31,9 @@ $suppliers = Supplier::all();
 public function store(StoreProductRequest $request)
 {
 $validated = $request->validated();
+if ($request->hasFile('image')) {
+    $validated['image'] = $request->file('image')->store('products', 'public');
+}
 Product::create($validated);
 
 return redirect()->route('products.index')
