@@ -7,6 +7,7 @@ use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\SuppliersController;
 use App\Http\Controllers\LowStockController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\UserController;
 
 
 
@@ -46,6 +47,27 @@ Route::get('/products/{id}', [ProductController::class, 'show'])
     ->name('products.show');
     Route::get('/categories', [CategoryController::class, 'index'])
     ->name('categories.index');
+    Route::get('/users', [UserController::class, 'index'])
+    ->middleware('can:admin')
+    ->name('users.index');
+    Route::middleware('can:admin')->group(function () {
+
+    Route::get('/categories/create', [CategoryController::class, 'create'])
+        ->name('categories.create');
+
+    Route::post('/categories', [CategoryController::class, 'store'])
+        ->name('categories.store');
+
+    Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])
+        ->name('categories.edit');
+
+    Route::put('/categories/{category}', [CategoryController::class, 'update'])
+        ->name('categories.update');
+
+    Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])
+        ->name('categories.destroy');
+
+});
     Route::get('/low-stock', [LowStockController::class, 'index'])
     ->name('low-stock.index'); 
     });
