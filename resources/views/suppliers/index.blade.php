@@ -15,6 +15,19 @@
             <a href="{{ route('suppliers.show', $supplier['id']) }}">
                 View Details
             </a>
+            @can('admin')
+    <a href="{{ route('suppliers.edit', $supplier->id) }}">
+        Edit Supplier
+    </a>
+    
+    <form action="{{ route('suppliers.destroy', $supplier->id) }}" method="POST">
+        @csrf
+        @method('DELETE')
+
+        <button type="submit">Delete Supplier</button>
+    </form>
+@endcan
+
         </div>
         <hr>
     @endforeach

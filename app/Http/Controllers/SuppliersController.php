@@ -3,52 +3,58 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Supplier;
 
 class SuppliersController extends Controller
 {
-    private function suppliers()
-    {
-        return [
-            1 => [
-                'id' => 1,
-                'name' => 'ABC Suppliers',
-                'email' => 'abc@example.com',
-                'phone' => '0771234567',
-            ],
-
-            2 => [
-                'id' => 2,
-                'name' => 'City Traders',
-                'email' => 'city@example.com',
-                'phone' => '0777654321',
-            ],
-
-            3 => [
-                'id' => 3,
-                'name' => 'Global Supplies',
-                'email' => 'global@example.com',
-                'phone' => '0712345678',
-            ],
-        ];
-    }
-
     public function index()
     {
-        $suppliers = $this->suppliers();
+        $suppliers = Supplier::all();
 
         return view('suppliers.index', compact('suppliers'));
     }
 
     public function show($id)
     {
-        $suppliers = $this->suppliers();
-
-        if (!isset($suppliers[$id])) {
-            abort(404);
-        }
-
-        $supplier = $suppliers[$id];
+        $supplier = Supplier::findOrFail($id);
 
         return view('suppliers.show', compact('supplier'));
     }
+    public function edit($id)
+{
+    $supplier = Supplier::findOrFail($id);
+
+    return view('suppliers.edit', compact('supplier'));
+
+}
+public function update(Request $request, $id)
+{
+    $supplier = Supplier::findOrFail($id);
+
+    $validated = $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'nullable|email',
+        'phone' => 'nullable|string',
+        'address' => 'nullable|string',
+    ]);
+
+    $supplier->update($validated);
+
+    return redirect()->route('suppliers.index')
+        ->with('success', 'Supplier updated successfully!');
+}
+public function destroy($id)
+{
+    $supplier = Supplier::findOrFail($id);
+
+    if ($supplier->products()->exists()) {
+        return redirect()->route('suppliers.index')
+            ->with('error', 'Cannot delete supplier because products are linked.');
+    }
+
+    $supplier->delete();
+
+    return redirect()->route('suppliers.index')
+        ->with('success', 'Supplier deleted successfully!');
+}
 }

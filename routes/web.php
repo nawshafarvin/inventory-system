@@ -8,74 +8,90 @@ use App\Http\Controllers\SuppliersController;
 use App\Http\Controllers\LowStockController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\UserController;
-
-
-
+use App\Http\Controllers\StockMovementController;
 
 Route::get('/', function () {
     return view('welcome');
 });
+
 Route::get('/login', [LoginController::class, 'showLoginForm'])
     ->name('login');
 
 Route::post('/login', [LoginController::class, 'login']);
 
-Route::post('/logout', [LoginController::class, 'logout']);
 Route::middleware('auth')->group(function () {
+
+    Route::post('/logout', [LoginController::class, 'logout']);
+
     Route::get('/change-password', [PasswordController::class, 'show'])
-    ->name('password.change');
+        ->name('password.change');
+
     Route::post('/change-password', [PasswordController::class, 'update'])
-    ->name('password.update');
-    
-Route::view('/inventory-info', 'inventory-info');
+        ->name('password.update');
 
-Route::get('/suppliers', [SuppliersController::class, 'index'])
-    ->name('suppliers.index');
+    Route::view('/inventory-info', 'inventory-info');
 
-Route::get('/suppliers/{id}', [SuppliersController::class, 'show'])
-    ->name('suppliers.show');
+    Route::get('/suppliers', [SuppliersController::class, 'index'])
+        ->name('suppliers.index');
+
+    Route::get('/suppliers/{id}', [SuppliersController::class, 'show'])
+        ->name('suppliers.show');
+
     Route::get('/products', [ProductController::class, 'index'])
-    ->name('products.index');
-Route::middleware('can:admin')->group(function () {
-    Route::get('/products/create', [ProductController::class, 'create'])
-        ->name('products.create');
+        ->name('products.index');
 
-    Route::post('/products', [ProductController::class, 'store'])
-        ->name('products.store');
-});    
-Route::get('/products/{id}', [ProductController::class, 'show'])
-    ->name('products.show');
+    Route::get('/products/{id}', [ProductController::class, 'show'])
+        ->name('products.show');
+
     Route::get('/categories', [CategoryController::class, 'index'])
-    ->name('categories.index');
-    Route::get('/users', [UserController::class, 'index'])
-    ->middleware('can:admin')
-    ->name('users.index');
+        ->name('categories.index');
+
+    Route::get('/low-stock', [LowStockController::class, 'index'])
+        ->name('low-stock.index');
+
     Route::middleware('can:admin')->group(function () {
 
-    Route::get('/categories/create', [CategoryController::class, 'create'])
-        ->name('categories.create');
+        Route::get('/products/create', [ProductController::class, 'create'])
+            ->name('products.create');
 
-    Route::post('/categories', [CategoryController::class, 'store'])
-        ->name('categories.store');
+        Route::post('/products', [ProductController::class, 'store'])
+            ->name('products.store');
 
-    Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])
-        ->name('categories.edit');
+        Route::get('/products/{id}/edit', [ProductController::class, 'edit'])
+            ->name('products.edit');
+            Route::get('/suppliers/{id}/edit', [SuppliersController::class, 'edit'])
+    ->name('suppliers.edit');
+    Route::put('/suppliers/{id}', [SuppliersController::class, 'update'])
+    ->name('suppliers.update');
+    Route::delete('/suppliers/{id}', [SuppliersController::class, 'destroy'])
+    ->name('suppliers.destroy');
 
-    Route::put('/categories/{category}', [CategoryController::class, 'update'])
-        ->name('categories.update');
+        Route::put('/products/{id}', [ProductController::class, 'update'])
+            ->name('products.update');
 
-    Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])
-        ->name('categories.destroy');
+        Route::post('/products/{productId}/stock-movements', [StockMovementController::class, 'store'])
+            ->name('stock-movements.store');
+
+        Route::get('/categories/create', [CategoryController::class, 'create'])
+            ->name('categories.create');
+
+        Route::post('/categories', [CategoryController::class, 'store'])
+            ->name('categories.store');
+
+        Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])
+            ->name('categories.edit');
+
+        Route::get('/users', [UserController::class, 'index'])
+            ->name('users.index');
+    });
+
+    Route::get('/session-test', function () {
+        session(['student' => 'Nawsha']);
+        return session('student');
+    });
+
+    Route::get('/admin-dashboard', function () {
+        return 'Welcome Admin!';
+    })->middleware('admin');
 
 });
-    Route::get('/low-stock', [LowStockController::class, 'index'])
-    ->name('low-stock.index'); 
-    });
-    Route::get('/session-test', function () {
-    session(['student' => 'Nawsha']);
-
-    return session('student');
-    });
-    Route::get('/admin-dashboard', function () {
-    return 'Welcome Admin!';
-})->middleware(['auth', 'admin']);

@@ -34,4 +34,8 @@ class Product extends Model
     {
         return $this->belongsToMany(Tag::class);
     }
+    public function stockMovements()
+{
+    return $this->hasMany(StockMovement::class);
+}
 }

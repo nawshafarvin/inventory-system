@@ -42,6 +42,11 @@
             <a href="{{ route('products.show', $product->id) }}">
                 View Details
             </a>
+            @can('admin')
+    <a href="{{ route('products.edit', $product->id) }}">
+        Edit Product
+    </a>
+@endcan
         </div>
         <hr>
     @endforeach
