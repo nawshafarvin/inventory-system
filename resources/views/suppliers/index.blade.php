@@ -4,6 +4,20 @@
 
 @section('content')
     <h2>Supplier List</h2>
+    <form action="{{ route('suppliers.index') }}" method="GET">
+
+    <input
+        type="text"
+        name="search"
+        placeholder="Search supplier name"
+        value="{{ request('search') }}"
+    >
+
+    <button type="submit">Search</button>
+
+    <a href="{{ route('suppliers.index') }}">Clear</a>
+
+</form> 
 
     @foreach ($suppliers as $supplier)
         <div>
@@ -30,5 +44,10 @@
 
         </div>
         <hr>
-    @endforeach
+        @endforeach
+
+    <div>
+      {{ $suppliers->links() }}
+    </div>
+
 @endsection

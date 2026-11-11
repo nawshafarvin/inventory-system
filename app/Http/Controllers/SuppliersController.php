@@ -7,13 +7,22 @@ use App\Models\Supplier;
 
 class SuppliersController extends Controller
 {
-    public function index()
-    {
-        $suppliers = Supplier::all();
+    public function index(Request $request)
+{
+    $query = Supplier::query();
 
-        return view('suppliers.index', compact('suppliers'));
+    // Search by supplier name
+    if ($request->filled('search')) {
+        $search = $request->search;
+
+        $query->where('name', 'like', "%{$search}%");
     }
 
+    // Pagination
+    $suppliers = $query->paginate(10)->withQueryString();
+
+    return view('suppliers.index', compact('suppliers'));
+}
     public function show($id)
     {
         $supplier = Supplier::findOrFail($id);

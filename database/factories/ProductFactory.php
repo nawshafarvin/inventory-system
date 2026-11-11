@@ -19,7 +19,8 @@ class ProductFactory extends Factory
             'price' => fake()->randomFloat(2, 100, 10000),
             'quantity' => fake()->numberBetween(1, 100),
             'category_id' => Category::inRandomOrder()->value('id'),
-'supplier_id' => Supplier::inRandomOrder()->value('id'),
+            'supplier_id' => Supplier::inRandomOrder()->value('id'),
+            'sku' => fake()->unique()->bothify('SKU-#####'),
         ];
     }
 }

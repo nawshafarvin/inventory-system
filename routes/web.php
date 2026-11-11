@@ -9,6 +9,7 @@ use App\Http\Controllers\LowStockController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\StockMovementController;
+use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -20,6 +21,8 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])
 Route::post('/login', [LoginController::class, 'login']);
 
 Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->name('dashboard');
 
     Route::post('/logout', [LoginController::class, 'logout']);
 

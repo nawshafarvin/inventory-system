@@ -10,12 +10,31 @@ use App\Http\Requests\StoreProductRequest;
 
 class ProductController extends Controller
 {
-    public function index()
-    {
-        $products = Product::with(['supplier', 'category', 'tags'])->get();
+    public function index(Request $request)
+{
+    $query = Product::with(['supplier', 'category', 'tags']);
 
-        return view('products.index', ['products' => $products]);
+    // Search by product name or SKU
+    if ($request->filled('search')) {
+        $search = $request->search;
+
+        $query->where(function ($q) use ($search) {
+            $q->where('name', 'like', "%{$search}%")
+              ->orWhere('sku', 'like', "%{$search}%");
+        });
     }
+
+    // Filter by category
+    if ($request->filled('category_id')) {
+        $query->where('category_id', $request->category_id);
+    }
+
+    $products = $query->paginate(10)->withQueryString();
+
+    $categories = Category::orderBy('name')->get();
+
+    return view('products.index', compact('products', 'categories'));
+}
 
     public function show($id)
     {
