@@ -19,11 +19,33 @@
             </a>
 
             <div class="navbar-nav">
-                <a class="nav-link" href="{{ url('/') }}">Home</a>
-                <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
-                <a class="nav-link" href="{{ route('products.index') }}">Products</a>
-                <a class="nav-link" href="{{ route('suppliers.index') }}">Suppliers</a>
-            </div>
+    <a class="nav-link" href="{{ url('/') }}">Home</a>
+    <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
+    <a class="nav-link" href="{{ route('products.index') }}">Products</a>
+    <a class="nav-link" href="{{ route('suppliers.index') }}">Suppliers</a>
+
+    @auth
+        <a class="nav-link" href="{{ route('reports.index') }}">Reports</a>
+        <a class="nav-link" href="/categories">Categories</a>
+
+<a class="nav-link" href="/low-stock">Low Stock</a>
+
+@can('admin')
+    <a class="nav-link" href="/admin-dashboard">Admin</a>
+@endcan
+
+        <form action="{{ url('/logout') }}" method="POST">
+            @csrf
+            <button type="submit" class="nav-link btn btn-link">
+                Logout
+            </button>
+        </form>
+    @endauth
+
+    @guest
+        <a class="nav-link" href="{{ route('login') }}">Login</a>
+    @endguest
+</div>
 
         </div>
     </nav>

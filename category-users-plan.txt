@@ -1,0 +1,16 @@
+Project: Inventory Management System
+
+1. Category Management
+- View categories
+- Add categories
+- Edit categories
+- Delete categories
+
+2. Users Management
+- View users
+- Display user details
+- Manage user roles
+
+3. Testing
+- Test category functions
+- Test users page

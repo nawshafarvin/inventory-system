@@ -95,6 +95,9 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/users', [UserController::class, 'index'])
             ->name('users.index');
+            Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
+
+Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
     });
 
     Route::get('/session-test', function () {
