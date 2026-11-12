@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\StockMovementController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ReportController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -23,6 +24,14 @@ Route::post('/login', [LoginController::class, 'login']);
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])
     ->name('dashboard');
+    Route::get('/reports', [ReportController::class, 'index'])
+    ->name('reports.index');
+    Route::get('/reports/stock-value', [ReportController::class, 'stockValue'])
+    ->name('reports.stock-value');
+    Route::get('/reports/stock-movements', [ReportController::class, 'stockMovements'])
+    ->name('reports.stock-movements');
+    Route::get('/reports/category-stock', [ReportController::class, 'categoryStock'])
+    ->name('reports.category-stock');
 
     Route::post('/logout', [LoginController::class, 'logout']);
 
