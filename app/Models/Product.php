@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\StockMovement;
 
 class Product extends Model
 {
@@ -26,9 +27,9 @@ class Product extends Model
     }
 
     public function supplier()
-    {
-        return $this->belongsTo(Supplier::class);
-    }
+{
+    return $this->belongsTo(Supplier::class);
+}
 
     public function tags()
     {

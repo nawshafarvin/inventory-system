@@ -47,5 +47,42 @@
         <a class="btn" href="{{ route('products.index') }}">
             Back to Products
         </a>
+        <hr>
+
+<h2>Stock Movement History</h2>
+
+@if($product->stockMovements->count() > 0)
+
+    <table border="1" cellpadding="10">
+
+        <thead>
+            <tr>
+                <th>Movement Type</th>
+                <th>Quantity</th>
+                <th>Note</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach($product->stockMovements as $movement)
+
+                <tr>
+                    <td>{{ ucfirst($movement->type) }}</td>
+                    <td>{{ $movement->quantity }}</td>
+                    <td>{{ $movement->note }}</td>
+                    <td>{{ $movement->created_at }}</td>
+                </tr>
+
+            @endforeach
+        </tbody>
+
+    </table>
+
+@else
+
+    <p>No stock movements found.</p>
+
+@endif
     </div>
 @endsection
