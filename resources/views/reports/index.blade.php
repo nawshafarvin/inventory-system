@@ -25,7 +25,9 @@
                 <div class="card-body">
                     <h5>Stock Movements Report</h5>
                     <p>View stock in and stock out details.</p>
-                    <a href="#" class="btn btn-success">View Report</a>
+                    <a href="{{ route('reports.stock-value') }}" class="btn btn-primary">
+    View Report
+</a>
                 </div>
             </div>
         </div>

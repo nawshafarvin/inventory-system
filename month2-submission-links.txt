@@ -1,0 +1,7 @@
+MONTH 2 SUBMISSION
+
+1. Pull Request Link:
+https://github.com/nawshafarvin/inventory-system/pull/1
+
+2. GitHub Repository:
+https://github.com/nawshafarvin/inventory-system
