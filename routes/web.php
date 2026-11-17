@@ -53,7 +53,8 @@ Route::middleware('auth')->group(function () {
         ->name('products.index');
 
     Route::get('/products/{id}', [ProductController::class, 'show'])
-        ->name('products.show');
+    ->whereNumber('id')
+    ->name('products.show');
 
     Route::get('/categories', [CategoryController::class, 'index'])
         ->name('categories.index');
